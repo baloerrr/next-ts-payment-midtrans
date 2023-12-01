@@ -7,7 +7,20 @@ import { useEffect } from "react";
 
 export default function Home() {
   useEffect(() => {
-    // render midtrans snap token
+    const snapScript: string = "https://app.sandbox.midtrans.com/snap/snap.js"
+    const clientKey: any = process.env.NEXT_PUBLIC_CLIENT
+
+    const script = document.createElement('script')
+    script.src = snapScript
+
+    script.setAttribute("data-client-key", clientKey)
+    script.async = true
+
+    document.body.appendChild(script)
+
+    return () => {
+      document.body.removeChild(script)
+    }
   }, []);
 
   return (
@@ -26,7 +39,7 @@ export default function Home() {
               {product.name}
             </h3>
             <p className="mt-1.5 text-sm text-gray-700">Rp {product.price}</p>
-            <p className="py-4 text-sm text-gray-700 text-justify">
+            <p className="py-4 text-stext-gray-700 text-justify">
               {product.description}
             </p>
             <Checkout />
