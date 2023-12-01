@@ -1,22 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, ChangeEvent } from "react";
 
-const Checkout = () => {
-  const [quantity, setQuantity] = useState(1);
+const Checkout: React.FC = () => {
+  const [quantity, setQuantity] = useState<number>(1);
 
   const decreaseQuantity = () => {
-    setQuantity((prevState) => (quantity > 1 ? prevState - 1 : null));
+    setQuantity((prevQuantity) => (prevQuantity > 1 ? prevQuantity - 1 : 1));
   };
 
   const increaseQuantity = () => {
-    setQuantity((prevState) => prevState + 1);
+    setQuantity((prevQuantity) => prevQuantity + 1);
   };
 
-  const checkout = async () => {
-    alert("Checkout SNAP! 🌟")
+  const checkout = () => {
+    alert("Checkout SNAP! 🌟");
   };
 
-  const generatePaymentLink = async () => {
-    alert("Checkout Payment Link! 🔥")
+  const generatePaymentLink = () => {
+    alert("Generate Payment Link! 🔥");
+  };
+
+  const handleQuantityChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const newQuantity = parseInt(e.target.value, 10);
+    if (!isNaN(newQuantity) && newQuantity >= 1) {
+      setQuantity(newQuantity);
+    }
   };
 
   return (
@@ -35,7 +42,7 @@ const Checkout = () => {
             id="quantity"
             value={quantity}
             className="h-10 w-16 text-black border-transparent text-center"
-            onChange={quantity}
+            onChange={handleQuantityChange}
           />
 
           <button
