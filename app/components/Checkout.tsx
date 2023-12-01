@@ -40,7 +40,7 @@ const Checkout: React.FC = () => {
       }
 
       ;(window as any).snap.pay(responseData.token)
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error during checkout:', error.message)
       // Handle the error as needed
     }
