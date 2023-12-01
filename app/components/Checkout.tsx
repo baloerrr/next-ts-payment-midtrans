@@ -1,5 +1,6 @@
 import React, { useState, ChangeEvent } from "react";
 import { product } from "../libs/product";
+import { NextResponse } from "next/server";
 
 const Checkout: React.FC = () => {
   const [quantity, setQuantity] = useState<number>(1);
@@ -26,8 +27,10 @@ const Checkout: React.FC = () => {
     })
 
     const requestData = await response.json()
-    console.log(requestData)
-  };
+    console.log(requestData);
+    
+    (window as any).snap.pay(requestData.token)
+  }
 
   const generatePaymentLink = () => {
     alert("Generate Payment Link! 🔥");
