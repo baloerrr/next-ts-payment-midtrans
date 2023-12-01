@@ -1,4 +1,5 @@
 import React, { useState, ChangeEvent } from "react";
+import { product } from "../libs/product";
 
 const Checkout: React.FC = () => {
   const [quantity, setQuantity] = useState<number>(1);
@@ -11,8 +12,21 @@ const Checkout: React.FC = () => {
     setQuantity((prevQuantity) => prevQuantity + 1);
   };
 
-  const checkout = () => {
-    alert("Checkout SNAP! 🌟");
+  const checkout = async () => {
+    const data = {
+      id: product.id,
+      productName: product.name,
+      price: product.price,
+      quantity: quantity
+    }
+
+    const response = await fetch("/api/tokenizer", {
+      method: "POST",
+      body: JSON.stringify(data)
+    })
+
+    const requestData = await response.json()
+    console.log(requestData)
   };
 
   const generatePaymentLink = () => {
