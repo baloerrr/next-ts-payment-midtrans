@@ -20,20 +20,33 @@ const Checkout: React.FC = () => {
       price: product.price,
       quantity: quantity
     }
-
-    const response = await fetch("/api/tokenizer", {
-      method: "POST",
-      body: JSON.stringify(data)
-    })
-
-    const requestData = await response.json()
-    console.log(requestData);
-    
-    (window as any).snap.pay(requestData.token)
+  
+    try {
+      const response = await fetch("/api/tokenizer", {
+        method: "POST",
+        body: JSON.stringify(data)
+      });
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+  
+      const responseData = await response.json();
+  
+      if (!responseData || !responseData.token) {
+        throw new Error("Invalid response data");
+      }
+  
+      console.log(responseData);
+      (window as any).snap.pay(responseData.token);
+    } catch (error: any) {
+      console.error("Error during checkout:", error.message);
+      // Handle the error as needed
+    }
   }
 
   const generatePaymentLink = () => {
-    alert("Generate Payment Link! 🔥");
+    
   };
 
   const handleQuantityChange = (e: ChangeEvent<HTMLInputElement>) => {

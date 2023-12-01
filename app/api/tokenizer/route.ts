@@ -3,7 +3,7 @@ import Midtrans, { Snap } from 'midtrans-client';
 
 const snap = new Snap({
   isProduction: false,
-  serverKey: process.env.SECRET || '',
+  serverKey: process.env.NEXT_PUBLIC_SECRET || '',
   clientKey: process.env.NEXT_PUBLIC_CLIENT || '',
 });
 
